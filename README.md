@@ -14,7 +14,7 @@
     from GURU NANAK DEV ENGINEERING COLLEGE, LUDHIANA.
   </p>
   <div>
-    <nav><h4>Some of my interests are:</h4></nav><br>
+    <nav>Some of my interests are:</nav><br>
     <ol >
       <li>Listening Music</li>
       <li>Learning new things about technologies</li>
