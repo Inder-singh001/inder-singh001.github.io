@@ -14,7 +14,7 @@
     from GURU NANAK DEV ENGINEERING COLLEGE, LUDHIANA.
   </p>
   <div>
-    <nav>Some of my interests are:</nav><br>
+    <p>Some of my interests are:</p><br>
     <ol >
       <li>Listening Music</li>
       <li>Learning new things about technologies</li>
@@ -22,7 +22,7 @@
     </ol>
   </div>
   <div>
-    <nav>I also love Sports and a Basketball Player too. Here, Some of my acheivements are:</nav><br>
+    <p>I also love Sports and a Basketball Player too. Here, Some of my acheivements are:</p><br>
     <ul type='disc' >
       <li>got <b>2<sup>nd</sup></b>position in<b> INTER-YEAR BASKETBALL COMPETITION</b> held in December 2021.</li>
       <li>got <b>3<sup>th</sup></b>position in<b> INTER-YEAR BASKETBALL COMPETITION</b> held in May 2022.</li>
