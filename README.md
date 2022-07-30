@@ -17,4 +17,8 @@ I'm **Inderpreet Singh** I am currently persuing Btech. degree in **Computer Sci
 - got **second** position in **INTER-YEAR BASKETBALL COMPETITION** held in December 2021.
 - got **third** position in **INTER-YEAR BASKETBALL COMPETITION** held in May 2022.
 - got **third** position in **400-Meter Race** at 68th Annual Sports Meet 2022.
----
+
+#### Skills
+- HTML5 and CSS
+- Markdown
+- Basic C programer
