@@ -21,4 +21,6 @@ I'm **Inderpreet Singh** I am currently persuing Btech. degree in **Computer Sci
 #### Skills
 - HTML5 and CSS
 - Markdown
-- Basic C programer
+- Basic C/C++/Python programer
+- Graphic Designer
+- Linux user
