@@ -1,10 +1,10 @@
-# theme: jekyll-theme-architect
+theme: jekyll-theme-architect
 title: Inderpreet Singh's Resume
 # description: "A professional portfolio showcasing my skills and projects"
 author: Inderpreet Singh
 url: "https://inder-singh001.github.io/"
 baseurl: "" # Leave empty for root
-theme: jekyll-theme-minimal
+# theme: jekyll-theme-minimal
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
 
