@@ -3,12 +3,11 @@ title: Inderpreet Singh's Resume
 author: Inderpreet Singh
 url: "https://inder-singh001.github.io/"
 baseurl: "" # Leave empty for root
-theme: jekyll-theme-minimal
+theme: jekyll-theme-slate
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
 
 
 # Exclude files from being processed
 exclude:
-  - README.md
   - LICENSE
