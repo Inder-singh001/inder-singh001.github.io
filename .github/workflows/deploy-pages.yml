@@ -10,6 +10,11 @@ on:
     branches:
       - main
       - cursor/3d-portfolio-website-e9dd
+    # Only source changes trigger the workflow; the built-site commit it
+    # pushes to main touches only root artifacts, so no trigger loop.
+    paths:
+      - 'portfolio/**'
+      - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -50,6 +55,7 @@ jobs:
           publish_dir: portfolio/dist
           force_orphan: true
       # Pages on this repo serves from the root of main, so also sync the
+<<<<<<< Updated upstream
       # built site there. [skip ci] prevents retriggering this workflow.
       - name: Publish built site to main root
         if: github.ref == 'refs/heads/main'
@@ -60,6 +66,26 @@ jobs:
           publish_dir: portfolio/dist
           keep_files: true
           full_commit_message: 'Publish built site to main root [skip ci]'
+=======
+      # built site there. This push uses the workflow token, which (unlike
+      # bot pushes) triggers GitHub's Pages build.
+      - name: Publish built site to main root
+        if: github.ref == 'refs/heads/main'
+        run: |
+          rsync -a --delete portfolio/dist/assets/ assets/
+          cp portfolio/dist/index.html index.html
+          cp portfolio/dist/404.html 404.html
+          cp portfolio/dist/favicon.svg favicon.svg
+          cp portfolio/dist/icons.svg icons.svg
+          touch .nojekyll
+          git add -A
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Publish built site to main root"
+            git push
+          fi
+>>>>>>> Stashed changes
       - uses: actions/upload-pages-artifact@v3
         with:
           path: portfolio/dist
