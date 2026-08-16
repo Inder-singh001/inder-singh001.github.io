@@ -37,8 +37,8 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: portfolio
-        env:
-          BASE_PATH: /Portfolio/
+        # Repo is the user site (inder-singh001.github.io), served at the
+        # domain root, so the default base path '/' is correct.
       - name: Prepare Pages artifacts
         run: |
           touch portfolio/dist/.nojekyll
