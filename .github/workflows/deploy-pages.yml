@@ -1,0 +1,68 @@
+name: Deploy portfolio to GitHub Pages
+
+# Publishes the site via BOTH Pages mechanisms so it works with either
+# repo setting (Settings -> Pages -> Source):
+#   - "Deploy from a branch" (gh-pages / root): the gh-pages push job
+#   - "GitHub Actions": the deploy-pages artifact job
+
+on:
+  push:
+    branches:
+      - main
+      - cursor/3d-portfolio-website-e9dd
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portfolio/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+        working-directory: portfolio
+      - name: Build
+        run: npm run build
+        working-directory: portfolio
+        env:
+          BASE_PATH: /Portfolio/
+      - name: Prepare Pages artifacts
+        run: |
+          touch portfolio/dist/.nojekyll
+          cp portfolio/dist/index.html portfolio/dist/404.html
+      - name: Push to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: portfolio/dist
+          force_orphan: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: portfolio/dist
+
+  # Only succeeds when Pages source is set to "GitHub Actions";
+  # harmless (and ignorable) when source is the gh-pages branch.
+  deploy-actions-source:
+    needs: build
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
