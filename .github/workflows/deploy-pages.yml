@@ -1,8 +1,9 @@
 name: Deploy portfolio to GitHub Pages
 
-# Publishes the site via BOTH Pages mechanisms so it works with either
+# Publishes the site via all Pages mechanisms so it works with any
 # repo setting (Settings -> Pages -> Source):
-#   - "Deploy from a branch" (gh-pages / root): the gh-pages push job
+#   - "Deploy from a branch" main / root: the main-root publish step
+#   - "Deploy from a branch" gh-pages / root: the gh-pages push step
 #   - "GitHub Actions": the deploy-pages artifact job
 
 on:
@@ -55,18 +56,6 @@ jobs:
           publish_dir: portfolio/dist
           force_orphan: true
       # Pages on this repo serves from the root of main, so also sync the
-<<<<<<< Updated upstream
-      # built site there. [skip ci] prevents retriggering this workflow.
-      - name: Publish built site to main root
-        if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: main
-          publish_dir: portfolio/dist
-          keep_files: true
-          full_commit_message: 'Publish built site to main root [skip ci]'
-=======
       # built site there. This push uses the workflow token, which (unlike
       # bot pushes) triggers GitHub's Pages build.
       - name: Publish built site to main root
@@ -85,13 +74,12 @@ jobs:
             git commit -m "Publish built site to main root"
             git push
           fi
->>>>>>> Stashed changes
       - uses: actions/upload-pages-artifact@v3
         with:
           path: portfolio/dist
 
   # Only succeeds when Pages source is set to "GitHub Actions";
-  # harmless (and ignorable) when source is the gh-pages branch.
+  # harmless (and ignorable) when source is a branch.
   deploy-actions-source:
     needs: build
     runs-on: ubuntu-latest
