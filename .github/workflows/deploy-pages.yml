@@ -1,8 +1,9 @@
 name: Deploy portfolio to GitHub Pages
 
-# Builds the site and pushes it to the gh-pages branch.
-# One-time repo setting required: Settings -> Pages -> Source:
-# "Deploy from a branch" -> gh-pages -> / (root).
+# Publishes the site via BOTH Pages mechanisms so it works with either
+# repo setting (Settings -> Pages -> Source):
+#   - "Deploy from a branch" (gh-pages / root): the gh-pages push job
+#   - "GitHub Actions": the deploy-pages artifact job
 
 on:
   push:
@@ -13,13 +14,15 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,3 +49,20 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: portfolio/dist
           force_orphan: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: portfolio/dist
+
+  # Only succeeds when Pages source is set to "GitHub Actions";
+  # harmless (and ignorable) when source is the gh-pages branch.
+  deploy-actions-source:
+    needs: build
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
