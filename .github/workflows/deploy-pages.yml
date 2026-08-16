@@ -49,6 +49,17 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: portfolio/dist
           force_orphan: true
+      # Pages on this repo serves from the root of main, so also sync the
+      # built site there. [skip ci] prevents retriggering this workflow.
+      - name: Publish built site to main root
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: main
+          publish_dir: portfolio/dist
+          keep_files: true
+          full_commit_message: 'Publish built site to main root [skip ci]'
       - uses: actions/upload-pages-artifact@v3
         with:
           path: portfolio/dist
